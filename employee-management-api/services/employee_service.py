@@ -17,3 +17,6 @@ def create_employee(data):
     db.session.commit()
 
     return employee
+
+def get_all_employees():
+    return Employee.query.all()

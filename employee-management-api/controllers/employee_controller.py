@@ -1,5 +1,8 @@
 from flask import request, jsonify
-from services.employee_service import create_employee
+from services.employee_service import (
+    create_employee,
+    get_all_employees
+)
 
 def add_employee():
 
@@ -16,3 +19,12 @@ def add_employee():
         "message": "Employee created",
         "employee": employee.to_dict()
     })
+
+def get_employees():
+
+    employees = get_all_employees()
+
+    return jsonify([
+        employee.to_dict()
+        for employee in employees
+    ])

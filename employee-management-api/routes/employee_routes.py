@@ -1,4 +1,8 @@
 from flask import Blueprint
+from controllers.employee_controller import (
+    add_employee,
+    get_employees
+)
 
 from controllers.employee_controller import add_employee
 
@@ -9,5 +13,5 @@ employee_bp = Blueprint(
 
 employee_bp.route(
     "/employees",
-    methods=["POST"]
-)(add_employee)
+    methods=["GET"]
+)(get_employees)
