@@ -20,3 +20,6 @@ def create_employee(data):
 
 def get_all_employees():
     return Employee.query.all()
+
+def get_employee_by_id(employee_id):
+    return Employee.query.get(employee_id)

@@ -1,7 +1,8 @@
 from flask import request, jsonify
 from services.employee_service import (
     create_employee,
-    get_all_employees
+    get_all_employees,
+    get_employee_by_id
 )
 
 def add_employee():
@@ -28,3 +29,16 @@ def get_employees():
         employee.to_dict()
         for employee in employees
     ])
+
+def get_employee(employee_id):
+
+    employee = get_employee_by_id(employee_id)
+
+    if not employee:
+        return jsonify({
+            "error": "Employee not found"
+        }), 404
+
+    return jsonify(
+        employee.to_dict()
+    )
