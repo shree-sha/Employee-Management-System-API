@@ -39,3 +39,15 @@ def update_employee(employee_id, data):
     db.session.commit()
 
     return employee
+
+def delete_employee(employee_id):
+
+    employee = Employee.query.get(employee_id)
+
+    if not employee:
+        return False
+
+    db.session.delete(employee)
+    db.session.commit()
+
+    return True

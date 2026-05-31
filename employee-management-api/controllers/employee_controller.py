@@ -3,7 +3,8 @@ from services.employee_service import (
     create_employee,
     get_all_employees,
     get_employee_by_id,
-    update_employee
+    update_employee,
+    delete_employee
 )
 
 def add_employee():
@@ -63,3 +64,16 @@ def update_employee_controller(employee_id):
     return jsonify(
         employee.to_dict()
     )
+
+def delete_employee_controller(employee_id):
+
+    deleted = delete_employee(employee_id)
+
+    if not deleted:
+        return jsonify({
+            "error": "Employee not found"
+        }), 404
+
+    return jsonify({
+        "message": "Employee deleted successfully"
+    })
