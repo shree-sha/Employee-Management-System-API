@@ -3,7 +3,8 @@ from flask import Blueprint
 from controllers.employee_controller import (
     add_employee,
     get_employees,
-    get_employee
+    get_employee,
+    update_employee_controller
 )
 
 employee_bp = Blueprint(
@@ -28,3 +29,9 @@ employee_bp.route(
     "/employees/<int:employee_id>",
     methods=["GET"]
 )(get_employee)
+
+# PUT update employee
+employee_bp.route(
+    "/employees/<int:employee_id>",
+    methods=["PUT"]
+)(update_employee_controller)

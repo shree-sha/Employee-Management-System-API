@@ -23,3 +23,19 @@ def get_all_employees():
 
 def get_employee_by_id(employee_id):
     return Employee.query.get(employee_id)
+
+def update_employee(employee_id, data):
+
+    employee = Employee.query.get(employee_id)
+
+    if not employee:
+        return None
+
+    employee.name = data["name"]
+    employee.email = data["email"]
+    employee.department = data["department"]
+    employee.salary = data["salary"]
+
+    db.session.commit()
+
+    return employee
