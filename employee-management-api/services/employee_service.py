@@ -1,24 +1,19 @@
-#Business logic goes here.
+# Business logic goes here
+
+from models.employee import Employee
 from config.database import db
 
-class Employee(db.Model):
-    __tablename__ = "employees"
 
-    id = db.Column(db.Integer, primary_key=True)
+def create_employee(data):
 
-    name = db.Column(db.String(100), nullable=False)
+    employee = Employee(
+        name=data["name"],
+        email=data["email"],
+        department=data["department"],
+        salary=data["salary"]
+    )
 
-    email = db.Column(db.String(100), unique=True)
+    db.session.add(employee)
+    db.session.commit()
 
-    department = db.Column(db.String(100))
-
-    salary = db.Column(db.Integer)
-
-    def to_dict(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "email": self.email,
-            "department": self.department,
-            "salary": self.salary
-        }
+    return employee
