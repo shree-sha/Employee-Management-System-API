@@ -18,7 +18,15 @@ def create_employee(data):
 
     return employee
 
-def get_all_employees():
+from models.employee import Employee
+
+def get_all_employees(department=None):
+
+    if department:
+        return Employee.query.filter_by(
+            department=department
+        ).all()
+
     return Employee.query.all()
 
 def get_employee_by_id(employee_id):
@@ -51,3 +59,9 @@ def delete_employee(employee_id):
     db.session.commit()
 
     return True
+
+def get_employees_by_department(department):
+
+    return Employee.query.filter_by(
+        department=department
+    ).all()

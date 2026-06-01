@@ -5,7 +5,8 @@ from services.employee_service import (
     get_all_employees,
     get_employee_by_id,
     update_employee,
-    delete_employee
+    delete_employee,
+    get_employees_by_department
 )
 
 def add_employee():
@@ -33,7 +34,12 @@ def add_employee():
 
 def get_employees():
 
-    employees = get_all_employees()
+    department = request.args.get("department")
+
+    if department:
+        employees = get_employees_by_department(department)
+    else:
+        employees = get_all_employees()
 
     return jsonify([
         employee.to_dict()
