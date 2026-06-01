@@ -32,19 +32,34 @@ def add_employee():
         "employee": employee.to_dict()
     })
 
+from flask import request
+
 def get_employees():
 
     department = request.args.get("department")
 
-    if department:
-        employees = get_employees_by_department(department)
-    else:
-        employees = get_all_employees()
+    page = request.args.get(
+        "page",
+        default=1,
+        type=int
+    )
 
-    return jsonify([
+    limit = request.args.get(
+        "limit",
+        default=5,
+        type=int
+    )
+
+    employees = get_all_employees(
+        department,
+        page,
+        limit
+    )
+
+    return [
         employee.to_dict()
         for employee in employees
-    ])
+    ], 200
 
 def get_employee(employee_id):
 

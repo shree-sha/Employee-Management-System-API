@@ -20,14 +20,27 @@ def create_employee(data):
 
 from models.employee import Employee
 
-def get_all_employees(department=None):
+from models.employee import Employee
+
+def get_all_employees(
+    department=None,
+    page=None,
+    limit=None
+):
+
+    query = Employee.query
 
     if department:
-        return Employee.query.filter_by(
+        query = query.filter_by(
             department=department
-        ).all()
+        )
 
-    return Employee.query.all()
+    if page and limit:
+        offset = (page - 1) * limit
+
+        query = query.offset(offset).limit(limit)
+
+    return query.all()
 
 def get_employee_by_id(employee_id):
     return Employee.query.get(employee_id)
