@@ -1,4 +1,5 @@
 from flask import request, jsonify
+from services.validation_service import validate_employee
 from services.employee_service import (
     create_employee,
     get_all_employees,
@@ -14,6 +15,13 @@ def add_employee():
     if not data:
         return jsonify({
             "error": "JSON body required"
+        }), 400
+
+    validation_error = validate_employee(data)
+
+    if validation_error:
+        return jsonify({
+            "error": validation_error
         }), 400
 
     employee = create_employee(data)
@@ -54,12 +62,14 @@ def update_employee_controller(employee_id):
             "error": "JSON body required"
         }), 400
 
-    employee = update_employee(employee_id, data)
+    validation_error = validate_employee(data)
 
-    if not employee:
+    if validation_error:
         return jsonify({
-            "error": "Employee not found"
-        }), 404
+        "error": validation_error
+    }), 400
+
+    employee = update_employee(employee_id, data)
 
     return jsonify(
         employee.to_dict()
